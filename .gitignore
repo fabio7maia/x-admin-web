@@ -3,6 +3,8 @@ node_modules
 .cache
 .vercel
 .output
+.gen
+.env
 
 /build/
 /public/build

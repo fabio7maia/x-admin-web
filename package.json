@@ -10,7 +10,10 @@
     "build:css": "tailwindcss -o ./app/styles/tailwind.css",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run dev:css\" \"remix dev\"",
     "dev:css": "tailwindcss -o ./app/styles/tailwind.css --watch && postcss styles --base styles --dir app/styles -w",
-    "postinstall": "remix setup node"
+    "postinstall": "remix setup node",
+    "get-openapi": "node scripts/getOpenApi.js",
+    "copy-api-2-src": "node scripts/copyApi2Src.js",
+    "gen:api": "npm run get-openapi && openapi-generator generate --skip-validate-spec --input-spec .gen/api/openapi.json --generator-name typescript-axios --output .gen/api/client --config api.json --model-name-prefix XAdmin && cd .gen/api/client && npm install && npm run build && cd ../../.. && npm run copy-api-2-src"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
@@ -27,9 +30,12 @@
     "@tailwindcss/typography": "^0.5.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "api-spec-converter": "^2.12.0",
+    "axios": "^0.26.1",
     "concurrently": "^6.4.0",
     "cross-env": "^7.0.3",
     "daisyui": "^2.13.0",
+    "dotenv": "^16.0.0",
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
     "tailwindcss": "^3.0.1",

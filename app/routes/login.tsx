@@ -11,17 +11,26 @@ import {
   useGlobalData,
   useLogger,
   Typography,
+  useDidMount,
 } from "~/shared";
+import { useFetchLogin } from "~/services";
 
 export default function () {
   const { language, setUser } = useGlobalData();
   const logger = useLogger();
+  const fetch = useFetchLogin();
 
   const handleOnClickSubmit = React.useCallback(() => {
     logger("DEBUG > PublicLayout > Login > handleOnClickSubmit");
 
     setUser({ id: "user-test" });
   }, []);
+
+  useDidMount(() => {
+    fetch().then((res) =>
+      logger("DEBUG > PublicLayout > Login > fetch", { res })
+    );
+  });
 
   return (
     <PublicLayout blocks={{ all: false }}>
